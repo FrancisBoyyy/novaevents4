@@ -19,7 +19,7 @@ import pt.unl.fct.iadi.novaevents.domain.enums.EventType
 import java.time.LocalDate
 
 @Controller
-@RequestMapping(path = arrayOf("/nv/events"), produces = [(MediaType.TEXT_HTML_VALUE)])
+@RequestMapping(path = arrayOf("/"), produces = [(MediaType.TEXT_HTML_VALUE)])
 class NovaEventsController(private val service: NovaEventsService) {
 
     @GetMapping("/clubs")
@@ -52,8 +52,10 @@ class NovaEventsController(private val service: NovaEventsService) {
     ): String {
 
         val events = service.getAllEvents(type, clubId, from, to)
+        val clubs = service.getAllClubs()
 
         model.addAttribute("events", events)
+        model.addAttribute("clubs", clubs)
 
         return "events/list"
     }
