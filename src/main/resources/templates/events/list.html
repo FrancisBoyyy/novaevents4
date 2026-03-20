@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head('Events')"></head>
+
+<body>
+
+<nav th:replace="layout :: navbar"></nav>
+
+<div class="container">
+
+    <h1>Events</h1>
+
+    <form method="get" th:action="@{/events}" class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <label class="form-label">Type</label>
+            <select name="type" class="form-select">
+                <option value="">All</option>
+                <option th:each="t : ${T(pt.unl.fct.iadi.novaevents.domain.enums.EventType).values()}"
+                        th:value="${t}"
+                        th:text="${t}">
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Club</label>
+            <select name="clubId" class="form-select">
+                <option value="">All</option>
+                <option th:each="club : ${clubs}"
+                        th:value="${club.id}"
+                        th:text="${club.name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">From</label>
+            <input type="date" name="from" class="form-control"/>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">To</label>
+            <input type="date" name="to" class="form-control"/>
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+
+    </form>
+
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Club</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:if="${#lists.isEmpty(events)}">
+            <td colspan="6">No events found</td>
+        </tr>
+
+        <tr th:each="event : ${events}">
+
+            <td>
+                <a th:href="@{/clubs/{clubId}/events/{eventId}(clubId=${event.clubId}, eventId=${event.id})}"
+                   th:text="${event.name}">
+                </a>
+            </td>
+
+            <td th:text="${event.clubName}"></td>
+            <td th:text="${event.date}"></td>
+            <td th:text="${event.type}"></td>
+            <td th:text="${event.location}"></td>
+
+            <td>
+                <a class="btn btn-sm btn-warning"
+                   th:href="@{/clubs/{clubId}/events/{eventId}/edit(clubId=${event.clubId}, eventId=${event.id})}">
+                    Edit
+                </a>
+
+                <a class="btn btn-sm btn-danger"
+                   th:href="@{/clubs/{clubId}/events/{eventId}/delete(clubId=${event.clubId}, eventId=${event.id})}">
+                    Delete
+                </a>
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<th:block th:replace="layout :: scripts"></th:block>
+
+</body>
+</html>

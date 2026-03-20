@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head('Page Not Found')"></head>
+
+<body>
+
+<nav th:replace="layout :: navbar"></nav>
+
+<div class="container text-center mt-5">
+
+    <h1>404</h1>
+
+    <h2>Page Not Found</h2>
+
+    <p>The page you are looking for does not exist or may have been moved.</p>
+
+    <a class="btn btn-primary" th:href="@{/clubs}">
+        Back to Clubs
+    </a>
+
+</div>
+
+<th:block th:replace="layout :: scripts"></th:block>
+
+</body>
+</html>

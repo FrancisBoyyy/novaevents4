@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head('Create Event')"></head>
+
+<body>
+
+<nav th:replace="layout :: navbar"></nav>
+
+<div class="container">
+
+    <h1>Create Event</h1>
+
+    <form th:action="@{/clubs/{clubId}/events(clubId=${clubId})}" th:object="${event}" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Name *</label>
+            <input type="text" class="form-control"
+                   th:field="*{name}" placeholder="Event name">
+            <div class="text-danger"
+                 th:if="${#fields.hasErrors('name')}"
+                 th:errors="*{name}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Date *</label>
+            <input type="date" class="form-control"
+                   th:field="*{date}">
+            <div class="text-danger"
+                 th:if="${#fields.hasErrors('date')}"
+                 th:errors="*{date}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Type *</label>
+            <select class="form-select" th:field="*{type}">
+                <option value="">-- Select type --</option>
+                <option th:each="t : ${T(pt.unl.fct.iadi.novaevents.domain.enums.EventType).values()}"
+                        th:value="${t}"
+                        th:text="${t}">
+                </option>
+            </select>
+            <div class="text-danger"
+                 th:if="${#fields.hasErrors('type')}"
+                 th:errors="*{type}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" class="form-control"
+                   th:field="*{location}" placeholder="Optional">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control"
+                      th:field="*{description}"
+                      rows="3"
+                      placeholder="Optional"></textarea>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-success">
+                Create Event
+            </button>
+
+            <a class="btn btn-secondary"
+               th:href="@{/clubs/{id}(id=${clubId})}">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+<th:block th:replace="layout :: scripts"></th:block>
+
+</body>
+</html>

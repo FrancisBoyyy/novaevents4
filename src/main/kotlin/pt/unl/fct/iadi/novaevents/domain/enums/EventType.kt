@@ -1,4 +1,4 @@
-package pt.unl.fct.iadi.novaevents.domain
+package pt.unl.fct.iadi.novaevents.domain.enums
 
 enum class EventType {
     WORKSHOP,

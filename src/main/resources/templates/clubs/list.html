@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Clubs')"></head>
+<body>
+    <nav th:replace="layout :: navbar"></nav>
+    <div class="container">
+
+        <h1>Clubs</h1>
+
+        <table class="table table-striped">
+
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="club : ${clubs}">
+
+                <td>
+                    <a th:href="@{/clubs/{id}(id=${club.id})}"
+                       th:text="${club.name}">
+                    </a>
+                </td>
+
+                <td th:text="${club.category}"></td>
+
+                <td>
+                    <details>
+                        <summary>Show description</summary>
+                        <span th:text="${club.description}"></span>
+                    </details>
+                </td>
+
+                <td>
+                    <a class="btn btn-primary"
+                       th:href="@{/clubs/{id}(id=${club.id})}">
+                        View Details
+                    </a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <th:block th:replace="layout :: scripts"></th:block>
+
+</body>
+</html>
