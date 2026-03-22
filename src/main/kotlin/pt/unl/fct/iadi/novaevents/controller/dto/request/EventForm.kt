@@ -8,15 +8,15 @@ import pt.unl.fct.iadi.novaevents.domain.enums.EventType
 import java.time.LocalDate
 
 data class EventForm(
-    @field:NotBlank(message = "Event ID cannot be blank")
+    @field:NotBlank(message = "Name is required")
     val name: String = "",
 
-    @field:NotNull(message = "Event ID cannot be blank")
+    @field:NotNull(message = "Date is required")
     val date: LocalDate? = null,
 
     val location: String = "",
 
-    @field:NotNull(message = "Event ID cannot be blank")
+    @field:NotNull(message = "Event type is required")
     val type: EventType? = null,
 
     val description: String = "",
