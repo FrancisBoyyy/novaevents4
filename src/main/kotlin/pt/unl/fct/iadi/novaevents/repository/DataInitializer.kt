@@ -1,4 +1,4 @@
-package pt.unl.fct.iadi.novaevents.config
+package pt.unl.fct.iadi.novaevents.repository
 
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
@@ -8,8 +8,6 @@ import pt.unl.fct.iadi.novaevents.domain.Event
 import pt.unl.fct.iadi.novaevents.domain.EventType
 import pt.unl.fct.iadi.novaevents.domain.EventTypeRepository
 import pt.unl.fct.iadi.novaevents.domain.enums.ClubCategory
-import pt.unl.fct.iadi.novaevents.repository.ClubRepository
-import pt.unl.fct.iadi.novaevents.repository.EventRepository
 import java.time.LocalDate
 
 @Component
