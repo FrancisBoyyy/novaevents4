@@ -17,7 +17,7 @@ class Event(
     var id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "club_id")
+    @JoinColumn(name = "club_id", nullable = false)
     var club: Club? = null,
 
     @Column(unique = true)

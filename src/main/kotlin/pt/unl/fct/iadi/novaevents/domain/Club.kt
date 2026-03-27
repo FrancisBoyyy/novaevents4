@@ -29,6 +29,6 @@ class Club(
     @Enumerated(EnumType.STRING)
     var category: ClubCategory? = null,
 
-    @OneToMany(mappedBy = "club", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
     var events: List<Event> = mutableListOf()
 )
