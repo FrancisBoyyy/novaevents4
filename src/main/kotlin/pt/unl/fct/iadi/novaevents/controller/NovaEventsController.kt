@@ -52,7 +52,7 @@ class NovaEventsController(private val service: NovaEventsService) {
         model: Model
     ): String {
 
-        val events = service.getAllEvents(type, clubId, from, to)
+        val events = service.getAllEvents(typeId, clubId, from, to)
         val clubs = service.getAllClubs()
         val eventTypes = service.getEventTypes()
 
