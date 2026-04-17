@@ -13,6 +13,9 @@
     <h1>Nova Events Sign In</h1>
 
     <form method="post" th:action="@{/login}">
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
         <div class="mb-3">
             <label class="form-label">Username</label>
             <input type="text" name="username" class="form-control" required />
