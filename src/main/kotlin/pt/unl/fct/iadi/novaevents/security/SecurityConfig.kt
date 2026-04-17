@@ -50,7 +50,7 @@ class SecurityConfig(private val appUserRepository: AppUserRepository) {
                 auth
                     .requestMatchers(HttpMethod.GET, "/login", "/clubs", "/clubs/**", "/events", "/clubs/*/events/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/clubs/*/events/create").hasAnyRole("ADMIN", "EDITOR")
-                    .requestMatchers(HttpMethod.POST, "/clubs/*/events/edit").hasAnyRole("ADMIN", "EDITOR")
+                    .requestMatchers(HttpMethod.POST, "/clubs/*/events/*/edit").hasAnyRole("ADMIN", "EDITOR")
                     .requestMatchers(HttpMethod.POST, "/clubs/*/events").hasAnyRole("ADMIN", "EDITOR")
                     .requestMatchers(HttpMethod.PUT, "/clubs/*/events/**").hasAnyRole("ADMIN", "EDITOR")
                     .requestMatchers(HttpMethod.PATCH, "/clubs/*/events/**").hasAnyRole("ADMIN", "EDITOR")
