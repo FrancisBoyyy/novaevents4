@@ -168,7 +168,7 @@ class NovaEventsController(private val service: NovaEventsService) {
     }
 
     @GetMapping("/clubs/{clubId}/events/{eventId}/delete")
-    @PreAuthorize("hasRole('ADMIN') or ")
+    @PreAuthorize("hasRole('ADMIN')")
     fun deleteEvent(@PathVariable clubId: Long, @PathVariable eventId: Long, model: Model): String{
 
         var event = service.getEventDetails(clubId, eventId)

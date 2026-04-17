@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout :: head('Nova Events Sign In')"></head>
+
+<body>
+
+<nav th:replace="layout :: navbar"></nav>
+
+<div class="container">
+
+    <h1>Nova Events Sign In</h1>
+
+    <form method="post" th:action="@{/login}">
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Sign In
+        </button>
+    </form>
+
+</div>
+
+<th:block th:replace="layout :: scripts"></th:block>
+
+</body>
+</html>

@@ -4,11 +4,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.UserDetailsManager
 import pt.unl.fct.iadi.novaevents.domain.AppUser
+import pt.unl.fct.iadi.novaevents.domain.enums.AppRole
+import pt.unl.fct.iadi.novaevents.domain.enums.Roles
 import pt.unl.fct.iadi.novaevents.repository.AppUserRepository
 
-class AppUserDetailsManager(private val userRepository: AppUserRepository) : UserDetailsManager {
+class AppUserDetailsManager(private val userRepository: AppUserRepository, private val passwordEncoder: PasswordEncoder) : UserDetailsManager {
     override fun loadUserByUsername(username: String): UserDetails {
         val user: AppUser = userRepository.findByUsername(username) ?:
         throw UsernameNotFoundException(username)
@@ -18,8 +21,31 @@ class AppUserDetailsManager(private val userRepository: AppUserRepository) : Use
     }
 
     override fun createUser(user: UserDetails?) {
-        TODO("Not yet implemented")
-        //DO
+        requireNotNull(user) { "UserDetails cannot be null" }
+
+        if (userRepository.existsByUsername(user.username)) {
+            throw IllegalArgumentException("User already exists")
+        }
+
+        val encodedPassword = passwordEncoder.encode(user.password)
+
+        val appUser = AppUser(
+            username = user.username,
+            password = encodedPassword
+        )
+
+        val roles = user.authorities.map {
+            val roleEnum = Roles.valueOf(it.authority)
+
+            AppRole(
+                role = roleEnum,
+                user = appUser
+            )
+        }.toMutableSet()
+
+        appUser.roles = roles
+
+        userRepository.createUser(appUser)
     }
 
     override fun updateUser(user: UserDetails?) {

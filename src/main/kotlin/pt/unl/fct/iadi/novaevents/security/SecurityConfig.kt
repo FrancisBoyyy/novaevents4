@@ -31,7 +31,7 @@ class SecurityConfig(private val appUserRepository: AppUserRepository) {
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun userDetailsManager(): UserDetailsManager = AppUserDetailsManager(appUserRepository)
+    fun userDetailsManager(passwordEncoder: PasswordEncoder): UserDetailsManager = AppUserDetailsManager(appUserRepository, passwordEncoder)
 
     @Bean
     fun securityFilterChain(http: HttpSecurity, jwtCookieAuthFilter: JwtCookieAuthFilter, jwtAuthSuccessHandler: JwtAuthSuccessHandler): SecurityFilterChain {
@@ -51,7 +51,7 @@ class SecurityConfig(private val appUserRepository: AppUserRepository) {
             .addFilterBefore(jwtCookieAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests { auth ->
                 auth
-                    //.requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
+                    .requestMatchers("/register", "/login").permitAll()
                     .requestMatchers(HttpMethod.GET, "/clubs", "/clubs/**", "/events", "/clubs/*/events/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/clubs/*/events").hasAnyRole("ADMIN", "EDITOR")
                     .requestMatchers(HttpMethod.PUT, "/clubs/*/events/**").hasAnyRole("ADMIN", "EDITOR")
