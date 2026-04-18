@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: head('Forbidden')"></head>
+
+<body>
+
+<nav th:replace="layout :: navbar"></nav>
+
+<div class="container text-center mt-5">
+
+    <h1>403</h1>
+
+    <h2>Forbidden</h2>
+
+    <p>The page you are looking for is forbidden.</p>
+
+    <a class="btn btn-primary" th:href="@{/clubs}">
+        Back to Clubs
+    </a>
+
+</div>
+
+<th:block th:replace="layout :: scripts"></th:block>
+
+</body>
+</html>
