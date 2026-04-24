@@ -13,6 +13,5 @@ interface OpenWeatherClient {
         @RequestParam q: String,
         @RequestParam appid: String,
         @RequestParam units: String,
-        @RequestHeader("Authorization") authorization: String,
     ): WeatherResponse
 }
