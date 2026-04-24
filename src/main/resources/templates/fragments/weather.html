@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<span th:fragment="result" th:switch="${raining}">
+    <span th:case="true">Raining</span>
+    <span th:case="false">Clear</span>
+    <span th:case="*">Weather data unavailable.</span>
+</span>
+</body>
+</html>

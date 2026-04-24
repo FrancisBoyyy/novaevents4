@@ -18,12 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam
 import pt.unl.fct.iadi.novaevents.service.NovaEventsService
 import pt.unl.fct.iadi.novaevents.controller.dto.request.EventForm
 import pt.unl.fct.iadi.novaevents.domain.EventType
+import pt.unl.fct.iadi.novaevents.service.WeatherService
 import java.security.Principal
 import java.time.LocalDate
 
 @Controller
 @RequestMapping(path = arrayOf("/"), produces = [(MediaType.TEXT_HTML_VALUE)])
-class NovaEventsController(private val service: NovaEventsService) {
+class NovaEventsController(
+    private val service: NovaEventsService,
+    private val weatherService: WeatherService,
+) {
+    private val OUTDOOR_CLUB_NAME = "Hiking & Outdoors Club"
 
     @GetMapping("/clubs")
     fun listClubs(model: Model): String {
@@ -94,6 +99,10 @@ class NovaEventsController(private val service: NovaEventsService) {
         principal: Principal
     ): String {
 
+        val club = service.getClubDetails(id)
+
+        validateOutdoorEvent(club.name, event.location, bindingResult, weatherService)
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("clubId", id)
             return "events/create"
@@ -149,6 +158,10 @@ class NovaEventsController(private val service: NovaEventsService) {
         model: ModelMap
     ): String {
 
+        val club = service.getClubDetails(clubId)
+
+        validateOutdoorEvent(club.name, event.location, bindingResult, weatherService)
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("clubId", clubId)
             model.addAttribute("eventId", eventId)
@@ -185,5 +198,32 @@ class NovaEventsController(private val service: NovaEventsService) {
         var clubId = service.deleteEvent(clubId, eventId);
 
         return "redirect:/clubs/${clubId}"
+    }
+
+    private fun validateOutdoorEvent(
+        clubName: String,
+        location: String?,
+        bindingResult: BindingResult,
+        weatherService: WeatherService
+    ) {
+        if (clubName != OUTDOOR_CLUB_NAME) return
+
+        if (location.isNullOrBlank()) {
+            bindingResult.rejectValue(
+                "location",
+                "location.required.outdoor",
+                "Location is required for outdoor events"
+            )
+            return
+        }
+
+        val trimmedLocation = location.trim()
+        if (weatherService.isRaining(trimmedLocation)) {
+            bindingResult.rejectValue(
+                "location",
+                "weather.raining",
+                "It is currently raining at \"$trimmedLocation\" — outdoor events cannot be created in bad weather"
+            )
+        }
     }
 }

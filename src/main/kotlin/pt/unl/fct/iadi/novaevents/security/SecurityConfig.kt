@@ -1,8 +1,11 @@
 package pt.unl.fct.iadi.novaevents.security
 
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
 import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -31,6 +34,29 @@ class SecurityConfig(private val appUserRepository: AppUserRepository) {
     fun userDetailsManager(passwordEncoder: PasswordEncoder): UserDetailsManager = AppUserDetailsManager(appUserRepository, passwordEncoder)
 
     @Bean
+    @Order(1)
+    fun internalApiSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .securityMatcher("/api/**")
+            .csrf { it.disable() }
+            .authorizeHttpRequests { it.anyRequest().authenticated() }
+            .exceptionHandling {
+                it.authenticationEntryPoint { _, res, _ ->
+                    res.status = HttpServletResponse.SC_UNAUTHORIZED
+                    res.contentType = MediaType.APPLICATION_JSON_VALUE
+                    res.writer.write("""{"error":"Unauthorized"}""")
+                }
+                it.accessDeniedHandler { _, res, _ ->
+                    res.status = HttpServletResponse.SC_FORBIDDEN
+                    res.contentType = MediaType.APPLICATION_JSON_VALUE
+                    res.writer.write("""{"error":"Forbidden"}""")
+                }
+            }
+        return http.build()
+    }
+
+    @Bean
+    @Order(2)
     fun securityFilterChain(http: HttpSecurity, jwtCookieAuthFilter: JwtCookieAuthFilter, jwtAuthSuccessHandler: JwtAuthSuccessHandler): SecurityFilterChain {
         http
             .sessionManagement {

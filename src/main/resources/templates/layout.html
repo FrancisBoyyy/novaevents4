@@ -50,6 +50,38 @@
 
 <th:block th:fragment="scripts">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const button = document.getElementById("check-weather-js");
+            const result = document.getElementById("weather-result");
+            const locationInput = document.getElementById("location");
+
+            button?.addEventListener("click", async () => {
+                const location = locationInput.value.trim();
+
+                if (!location) {
+                    result.textContent = "Please enter a location first.";
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        `/api/weather?location=${encodeURIComponent(location)}`,
+                        {
+                            headers: {
+                                "Accept": "application/json"
+                            }
+                        }
+                    );
+
+                    const data = await response.json();
+                    result.textContent = data.raining ? "Raining" : "Clear";
+                } catch (e) {
+                    result.textContent = "Weather data unavailable.";
+                }
+            });
+        });
+    </script>
 </th:block>
 
 </body>
