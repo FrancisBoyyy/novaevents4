@@ -7,6 +7,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.security.crypto.password.PasswordEncoder
 
 import pt.unl.fct.iadi.novaevents.domain.AppUser
 import pt.unl.fct.iadi.novaevents.repository.AppUserRepository
@@ -28,7 +29,7 @@ class TestAppUserDetailsManager {
 
     @Test
     fun getByUsernameReturnsUserWhenFound() {
-        `when`(repo.findByUsername("alice"))
+        `when`(appUserRepository.findByUsername("alice"))
             .thenReturn(AppUser(id = 1, username = "alice"))
 
         val result = userService.loadUserByUsername("alice")
