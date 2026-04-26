@@ -218,7 +218,7 @@ class NovaEventsController(
         }
 
         val trimmedLocation = location.trim()
-        if (weatherService.isRaining(trimmedLocation)) {
+        if (weatherService.isRaining(trimmedLocation)?:false) {
             bindingResult.rejectValue(
                 "location",
                 "weather.raining",
