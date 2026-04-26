@@ -21,6 +21,8 @@ class AppUserDetailsManagerTest {
     @InjectMocks
     lateinit var userService: AppUserDetailsManager
 
+    // modificação mentirosa
+
     @Test
     fun getByUsernameReturnsUserWhenFound() {
         `when`(repo.findByUsername("alice"))
