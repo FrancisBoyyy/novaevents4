@@ -33,10 +33,9 @@
             </a>
 
             <span id="navbar-username"
-                  class="text-white me-3"
+                  class="navbar-username text-white me-3"
                   sec:authorize="isAuthenticated()"
-                  sec:authentication="name">username
-            </span>
+                  sec:authentication="name"></span>
 
             <form th:action="@{/logout}" method="post"
                   sec:authorize="isAuthenticated()">
