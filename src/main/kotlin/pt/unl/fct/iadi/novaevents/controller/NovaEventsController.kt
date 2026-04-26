@@ -122,7 +122,7 @@ class NovaEventsController(
     }
 
     @GetMapping("/clubs/{clubId}/events/{eventId}/edit")
-    @PreAuthorize("@eventSecurity.isOwner(#id, authentication)")
+    @PreAuthorize("@eventSecurity.isOwner(#eventId, authentication)")
     fun editEvent(
         @PathVariable clubId: Long,
         @PathVariable eventId: Long,
