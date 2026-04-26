@@ -25,12 +25,10 @@ class TestAppUserDetailsManager {
     @InjectMocks
     lateinit var userService: AppUserDetailsManager
 
-    // modificação mentirosa
-
     @Test
     fun getByUsernameReturnsUserWhenFound() {
         `when`(appUserRepository.findByUsername("alice"))
-            .thenReturn(AppUser(id = 1, username = "alice"))
+            .thenReturn(AppUser(id = 1, username = "alice", password = "secret"))
 
         val result = userService.loadUserByUsername("alice")
 
