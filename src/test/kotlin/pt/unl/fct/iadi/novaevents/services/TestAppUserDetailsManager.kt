@@ -13,7 +13,7 @@ import pt.unl.fct.iadi.novaevents.repository.AppUserRepository
 import pt.unl.fct.iadi.novaevents.security.AppUserDetailsManager
 
 @ExtendWith(MockitoExtension::class)
-class AppUserDetailsManagerTest {
+class TestAppUserDetailsManager {
 
     @Mock
     lateinit var repo: AppUserRepository

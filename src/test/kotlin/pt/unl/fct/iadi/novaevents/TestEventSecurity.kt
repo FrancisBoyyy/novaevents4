@@ -15,7 +15,7 @@ import pt.unl.fct.iadi.novaevents.security.EventSecurity
 import java.util.Optional
 
 @ExtendWith(MockitoExtension::class)
-class EventSecurityTest {
+class TestEventSecurity {
 
     @org.mockito.Mock
     private lateinit var eventRepository: EventRepository

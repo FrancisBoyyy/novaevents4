@@ -3,7 +3,7 @@ package pt.unl.fct.iadi.novaevents
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class LayoutTemplateTest {
+class TestLayoutTemplate {
 
     @Test
     fun `layout template includes navbar username class`() {
