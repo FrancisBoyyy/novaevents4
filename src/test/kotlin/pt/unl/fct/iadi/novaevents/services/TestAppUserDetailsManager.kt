@@ -16,7 +16,10 @@ import pt.unl.fct.iadi.novaevents.security.AppUserDetailsManager
 class TestAppUserDetailsManager {
 
     @Mock
-    lateinit var repo: AppUserRepository
+    lateinit var appUserRepository: AppUserRepository
+
+    @Mock
+    lateinit var passwordEncoder: PasswordEncoder
 
     @InjectMocks
     lateinit var userService: AppUserDetailsManager
