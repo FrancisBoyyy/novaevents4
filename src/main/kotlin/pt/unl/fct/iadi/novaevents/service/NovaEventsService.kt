@@ -137,6 +137,7 @@ class NovaEventsService(
         val updated = Event(
             id = eventId,
             club = club,
+            owner = existingEvent.owner,
             name = eventForm.name ?: existingEvent.name,
             date = eventForm.date ?: existingEvent.date,
             location = eventForm.location ?: existingEvent.location,
